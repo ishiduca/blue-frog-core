@@ -1,0 +1,32 @@
+{
+  "name": "blue-frog-core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape t/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishiduca/blue-frog-core.git"
+  },
+  "keywords": [
+    "json-rpc",
+    "jsonrpc",
+    "json-rpc2",
+    "jsonrpc2"
+  ],
+  "author": "ishiduca@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ishiduca/blue-frog-core/issues"
+  },
+  "homepage": "https://github.com/ishiduca/blue-frog-core#readme",
+  "devDependencies": {
+    "tape": "^4.6.0"
+  },
+  "dependencies": {
+    "inherits": "^2.0.3",
+    "xtend": "^4.0.1"
+  }
+}
