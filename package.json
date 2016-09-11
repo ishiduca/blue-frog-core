@@ -1,7 +1,7 @@
 {
   "name": "blue-frog-core",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "a small JSON-RPC 2.0 library",
   "main": "index.js",
   "scripts": {
     "test": "tape t/*.js"
