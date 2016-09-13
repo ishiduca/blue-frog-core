@@ -5,6 +5,7 @@ module.exports.error    = error
 var JSONRPC = "2.0"
 var ERROR_CODE_MAX = -32000
 var ERROR_CODE_MIN = -32768
+var NO_ALLOWED_EXT_METHOD_NAME = 'rpc'
 
 function request (o) {
     if (! isObject(o))
@@ -114,7 +115,8 @@ function _checkMember (x, o) {
  
     for (var p in o) {
         if (Object.prototype.hasOwnProperty.apply(o, [p])) {
-            if (keys.indexOf(p) === -1)
+            var begin = p.slice(0, 3)
+            if (begin === NO_ALLOWED_EXT_METHOD_NAME)
                 throw new Error('this method name "' + p + '" is not allowed')
         }
     }
