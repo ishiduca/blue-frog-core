@@ -146,6 +146,10 @@ var invalidParams  = JsonRpcError.InvalidParams([data])
 var internalError  = JsonRpcError.InternalError([data])
 ```
 
+## see also
+
+[blue-frog-stream](https://github.com/ishiduca/blue-frog-stream)
+
 ## license
 
 MIT
