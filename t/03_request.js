@@ -35,3 +35,13 @@ test('var json_rpc_2_request_notification_object = request.notification(method[,
     t.deepEqual(notif2, request(null, "hoge", [1]), 'request.notification("hoge") deepEqual request(null, "hoge", [1]) deepEqual {jsonrpc: "2.0", id: null, method: "hoge", params: [1]}')
     t.end()
 })
+
+test('var json_rpc_2_extend_request_object = request.extend(requestObject, xtendObject)', t => {
+    var normal = request(1, 'foo', [1,2])
+    var x1     = request.extend(normal, {abc: 1})
+    var x2     = request.extend(normal, {abc: 8}, {def: 9})
+    t.deepEqual(x1, {jsonrpc:"2.0",id: 1, method: "foo", params: [1,2], abc: 1}, 'x1 deepEqual {jsonrpc:"2.0",id: 1, method: "foo", params: [1,2], abc: 1}')
+    t.deepEqual(x2, {jsonrpc:"2.0",id: 1, method: "foo", params: [1,2], abc: 8, def: 9}, 'x2 deepEqual {jsonrpc:"2.0",id: 1, method: "foo", params: [1,2], abc: 8, def: 9}')
+    t.throws(() => request.extend(normal, {rpcMethod: true}), /Error.*?this method name "rpcMethod" is not allowed/, 'request.extend(normal, {rpcMethod: true}) throw error # method name can not use with "rpc"')
+    t.end()
+})

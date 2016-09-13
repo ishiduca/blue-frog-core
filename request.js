@@ -3,6 +3,7 @@ var xtend    = require('xtend')
 
 module.exports = request
 module.exports.notification = notification
+module.exports.extend = x
 
 function request (id, method, _params) {
     var def = {
@@ -22,4 +23,10 @@ function request (id, method, _params) {
 
 function notification (method, _params) {
     return request(null, method, _params)
+}
+
+function x (a, b) {
+    var o = xtend.apply(null, arguments)
+    validate(o)
+    return o
 }

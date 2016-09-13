@@ -146,6 +146,26 @@ var invalidParams  = JsonRpcError.InvalidParams([data])
 var internalError  = JsonRpcError.InternalError([data])
 ```
 
+### extensions
+
+### create a json-rpc 2.0 request/response/error extend object
+
+```js
+var requestObject  = request.extend(request(id, method[, params]), opt)
+var responseObject = response.extend(response(id, result), opt)
+var errorObject    = response.error.extend(response.error(id, error), opt)
+
+var requestObject  = request.extend(request(3, 'addMeta'), {charset: 'utf8'})
+// {
+//   jsonrpc: '2.0',
+//   method:  'addMeta',
+//   id:       3,
+//   charset: 'utf8'
+// }
+```
+
+
+
 ## see also
 
 [blue-frog-stream](https://github.com/ishiduca/blue-frog-stream)

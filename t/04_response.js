@@ -74,3 +74,31 @@ test('var json_rpc_response_error_object = response.error(id, error)', t => {
 
     t.end()
 })
+
+test('var json_rpc_2_extend_response_object = response.extend(responseObject, xtendObject)', t => {
+    var org = response(1, 100)
+    var x1  = response.extend(org, {foo: "bar"}, {mon: "pop"})
+    t.deepEqual(x1, {jsonrpc:"2.0", id: 1, result: 100, foo: "bar", mon: "pop"}, 'x1 deepEqual {jsonrpc:"2.0", id: 1, result: 100, foo: "bar", mon: "pop"}')
+    t.throws(() => response.extend(org, {rpcMethod: "boo"}), /Error.*?this method name "rpcMethod" is not allowed/, 'rpc.response.extend(org, {rpcMethod: "boo"}) # method name can not use with "rpc"')
+    t.end()
+})
+
+test('var json_rpc_2_extend_response_error_object = response.error.extend(responseErrorObject, xtendObject)', t => {
+    var invError = new JsonRpcError.InvalidParams('POO')
+    var org = response.error(1, invError)
+    var xError  = response.error.extend(org, {a: 1}, {b: {c: 9}})
+    t.deepEqual(xError, {jsonrpc:"2.0",id: 1, error:{code:-32602, message: "Invalid params", data: "POO", name: "JsonRpcError"}, a: 1, b:{c: 9}}, 'xError deepEqual {jsonrpc:"2.0",id: 1, error:{code:-32602, message: "Invalid params", data: "POO", name: "JsonRpcError"}, a: 1, b:{c: 9}}')
+    const json = JSON.stringify(xError)
+    console.log('JSON.stringify(xError)')
+    t.ok(/"jsonrpc"\s*:\s*"2\.0"/.test(json), '/"jsonrpc"\s*:\s"2\\.0"/.test(json))')
+    t.ok(/"id"\s*:\s*1/.test(json), '/"id"\s*:\s1/.test(json))')
+    t.ok(/"error"\s*:\s*{[^}]*?"code"\s*:\s*-32602[^}]*?}/.test(json), '/"error"\s*:\s*{[^}]*?"code"\s*:\s*-32602[^}]*?}/.test(json))')
+    t.ok(/"error"\s*:\s*{[^}]*?"message"\s*:\s*"Invalid params"[^}]*?}/.test(json), '/"error"\s*:\s*{[^}]*?"message"\s*:\s*"Invalid params"[^}]*?}/.test(json))')
+    t.ok(/"error"\s*:\s*{[^}]*?"data"\s*:\s*"POO"[^}]*?}/.test(json), '/"error"\\s*:\\s*{[^}]*?"data"\\s*:\\s*"POO"[^}]*?}/.test(json))')
+    t.ok(/"a"\s*:\s*1/.test(json), '/"a"\s*:\s*1/.test(json)')
+    t.ok(/"b"\s*:\s*{\s*"c"\s*:\s*9\s*}\s*}/.test(json), '/"b"\s*:\s*{\s*"c"\s*:\s*9\s*}\s*}/.test(json)')
+    console.log('# %s', json)
+
+    t.throws(() => response.error.extend(org, {rpcError: 'pooh'}), /Error.*?this method name "rpcError" is not allowed/, 'response.error.extend(org, {rpcError: "pooh"}) throw error # method name can not use with "rpc"')
+    t.end()
+})
